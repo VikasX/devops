@@ -12,7 +12,7 @@ public class UserUtil {
     public static User createBasicUser() {
 
         User u = new User();
-        u.setUsername("user");
+        u.setUsername("userX");
         u.setPassword("password");
         u.setEmail("email@email.com");
         u.setFirstName("first");

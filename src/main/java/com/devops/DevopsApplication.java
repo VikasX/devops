@@ -23,7 +23,7 @@ import java.util.Set;
 @SpringBootApplication
 public class DevopsApplication implements CommandLineRunner{
 
-	private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
+private static final Logger LOG = LoggerFactory.getLogger(DevopsApplication.class);
 
 	@Autowired
 	private UserService us;
@@ -38,7 +38,7 @@ public class DevopsApplication implements CommandLineRunner{
 
 		User u = UserUtil.createBasicUser();
 		Set<UserRole> urole = new HashSet<>();
-		urole.add(new UserRole(u,new Role(RolesEnum.BASIC)));
+		urole.add(new UserRole(u,new Role(RolesEnum.PRO)));
 		LOG.debug("Creating User {}", u.getUsername());
 		us.createUser(u, PlanEnum.PRO,urole);
 		LOG.info("User {} created", u.getUsername());

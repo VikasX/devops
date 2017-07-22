@@ -69,6 +69,7 @@ public class RepositoriesIntegrationTest {
     @Test
     public void testCreateNewUser() throws Exception {
 
+        /*
         Plan bp = createPlan(PlanEnum.BASIC);
         pr.save(bp);
 
@@ -89,8 +90,8 @@ public class RepositoriesIntegrationTest {
         for (UserRole ur: uroles){
             rr.save(ur.getRole());
         }
-
-        bu = ur.save(bu);
+*/
+        User bu = createUser();
 
         User newUser = ur.findOne(bu.getId());
 
@@ -108,6 +109,17 @@ public class RepositoriesIntegrationTest {
 
 
     }
+
+    @Test
+    public void testDeleteUser() throws Exception {
+        User bu = createUser();
+        ur.delete(bu.getId());
+    }
+
+
+
+
+
     private Plan createPlan(PlanEnum e) {
         return new Plan(e);
     }
@@ -125,6 +137,31 @@ public class RepositoriesIntegrationTest {
        return new Role(e);
     }
 
+    private User createUser() {
+        Plan bp = createPlan(PlanEnum.BASIC);
+        pr.save(bp);
+
+        User bu = UserUtil.createBasicUser();
+        bu.setPlan(bp);
+
+        Role basicr = createRole(RolesEnum.BASIC);
+        rr.save(basicr);
+
+        Set<UserRole> uroles = new HashSet<>();
+
+        UserRole userR = new UserRole(bu,basicr);
+
+
+        uroles.add(userR);
+
+        bu.getUserRoles().addAll(uroles);
+
+        bu = ur.save(bu);
+
+        return bu;
+
+
+    }
 
 
 }
