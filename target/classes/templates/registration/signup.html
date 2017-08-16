@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+<div th:replace="common/navbar :: common-navbar" />
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <div th:if="${signedUp != null }">
+                <div th:if="${signedUp == 'true'}" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                    <p class="text-center">Profile created</p>
+                </div>
+
+                <div th:if="${signedUp == 'false'}" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                    <p class="text-center" >Message</p>
+                </div>
+
+            </div>
+
+            <div class="well">
+
+                <h1 th:if="${#httpServletRequest.getParameter('planId') == '1'}">Basic</h1>
+                <p class="lead">Please fill form</p>
+
+                <form id="signupform" th:action="@{/signup}"
+                      th:object="${__${T(com.devops.web.controller.SignupController).PAYLOAD_MODEL}__}"
+                      method="post" class="text-left" enctype="multipart/form-data">
+
+                    <div th:if="${param.containsKey('planId')}">
+                        <input type="hidden" name="planId" th:value="${#httpServletRequest.getParameter('planId')}" />
+
+                    </div>
+
+                    <div class="form-group">
+                        <div th:if="${duplicatedUsername}">
+                            <label for="username" > User exists</label>
+                            <input type="text" id="username" th:field="*{username}" class="form-control fieldError" />
+
+                        </div>
+                        <div th:if="${duplicatedUsername == null}">
+                            <label for="username" > User name</label>
+                            <input type="text" id="username" th:field="*{username}" class="form-control" />
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <div th:if="${duplicatedEmail}">
+                            <label for="email">email exists</label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control fieldError"/>
+                        </div>
+                        <div th:if="${duplicatedEmail == null}">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control "/>
+                        </div>
+
+
+                    </div>
+
+<div class="form-group">
+    <label for="password">password</label>
+    <input type="password" id="password" th:field="*{password}" class="form-control "/>
+
+</div>
+
+                    <div class="form-group">
+                        <label for="confirmpassword">confirmpassword</label>
+                        <input type="password" id="confirmpassword" th:field="*{confirmpassword}" class="form-control "/>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname">firstname</label>
+                        <input type="text" id="firstname" th:field="*{firstname}" class="form-control "/>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="lastname">lastname</label>
+                        <input type="text" id="lastname" th:field="*{lastname}" class="form-control "/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="desc">desc</label>
+                        <textarea type="text" id="desc" th:field="*{desc}"
+                                  class="form-control" rows="4"  ></textarea>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country" >Country</label>
+                        <select class="form-control" id="country" name="country" th:field="*{country}">
+                            <select>
+                                <option value="AF">Afghanistan</option>
+                                <option value="AX">Åland Islands</option>
+                                <option value="AL">Albania</option>
+                                <option value="DZ">Algeria</option>
+                                <option value="AS">American Samoa</option>
+                                <option value="AD">Andorra</option>
+                                <option value="AO">Angola</option>
+                                <option value="AI">Anguilla</option>
+                                <option value="AQ">Antarctica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">phone</label>
+                        <input type="text" id="phone" th:field="*{phone}" class="form-control "/>
+
+                    </div>
+
+
+                    <button type="submit" class="btn btn-default" >Submit</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<div th:replace="common/header :: before-body-scripts"/>
+</body>
+</html>
